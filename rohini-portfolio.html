@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rohini B — QA Engineer</title>
+<meta name="description" content="QA Engineer with 5+ years. Zero production leakages. ISTQB Certified. Open to all QA roles."/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet"/>
+<style>
+
+/* ═══════════════════════════════
+   TOKENS
+═══════════════════════════════ */
+:root {
+  --rb-bg:      #08090a;
+  --rb-s1:      #0f1112;
+  --rb-s2:      #161a1b;
+  --rb-border:  #222628;
+  --rb-border2: #2e3335;
+  --rb-lime:    #c8f135;
+  --rb-lime2:   #9ec92a;
+  --rb-sky:     #4ecdc4;
+  --rb-warm:    #f7c948;
+  --rb-text:    #e8eceb;
+  --rb-muted:   #5a6462;
+  --rb-muted2:  #8a9492;
+}
+
+/* ═══════════════════════════════
+   RESET
+═══════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--rb-bg);
+  color: var(--rb-text);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--rb-bg); }
+::-webkit-scrollbar-thumb { background: var(--rb-lime); border-radius: 2px; }
+
+/* ═══════════════════════════════
+   NOISE
+═══════════════════════════════ */
+.rb-noise {
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9998; opacity: 0.45;
+}
+
+/* ═══════════════════════════════
+   NAV
+═══════════════════════════════ */
+.rb-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2.5rem;
+  background: rgba(8,9,10,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--rb-border);
+  transition: box-shadow 0.3s;
+}
+.rb-nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem; letter-spacing: 0.08em;
+  color: var(--rb-lime); line-height: 1; text-decoration: none;
+}
+.rb-nav-right { display: flex; align-items: center; gap: 2rem; }
+.rb-nav-links { display: flex; gap: 1.75rem; list-style: none; }
+.rb-nav-link {
+  color: var(--rb-muted2); text-decoration: none;
+  font-size: 0.77rem; letter-spacing: 0.12em; text-transform: uppercase;
+  font-weight: 500; transition: color 0.2s;
+}
+.rb-nav-link:hover { color: var(--rb-lime); }
+.rb-nav-badge {
+  display: flex; align-items: center; gap: 0.5rem;
+  background: var(--rb-lime); color: #08090a;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  animation: rb-pulse-badge 2.5s ease infinite;
+}
+.rb-nav-badge-dot {
+  width: 6px; height: 6px; background: #08090a;
+  border-radius: 50%; animation: rb-blink 1.5s ease infinite;
+}
+@keyframes rb-pulse-badge {
+  0%,100% { box-shadow: 0 0 0 0 rgba(200,241,53,0.4); }
+  50%      { box-shadow: 0 0 0 8px rgba(200,241,53,0); }
+}
+@keyframes rb-blink { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
+
+.rb-hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 4px; background: none; border: none;
+}
+.rb-hamburger-bar {
+  display: block; width: 22px; height: 2px;
+  background: var(--rb-text); transition: 0.3s;
+}
+.rb-hamburger-open .rb-hamburger-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.rb-hamburger-open .rb-hamburger-bar:nth-child(2) { opacity: 0; }
+.rb-hamburger-open .rb-hamburger-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ═══════════════════════════════
+   MOBILE MENU
+═══════════════════════════════ */
+.rb-mobile-menu {
+  display: none; position: fixed; inset: 0;
+  background: rgba(8,9,10,0.98); z-index: 499;
+  flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+}
+.rb-mobile-menu-open { display: flex; }
+.rb-mobile-nav-link {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem; letter-spacing: 0.08em;
+  color: var(--rb-text); text-decoration: none; transition: color 0.2s;
+}
+.rb-mobile-nav-link:hover { color: var(--rb-lime); }
+
+/* ═══════════════════════════════
+   HERO
+═══════════════════════════════ */
+.rb-hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 400px;
+  position: relative; overflow: hidden;
+}
+.rb-hero-left {
+  padding: 10rem 3rem 5rem;
+  display: flex; flex-direction: column; justify-content: center;
+  border-right: 1px solid var(--rb-border); position: relative;
+}
+.rb-hero-glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 0% 40%, rgba(200,241,53,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.rb-hero-tag {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  background: rgba(200,241,53,0.1); border: 1px solid rgba(200,241,53,0.25);
+  padding: 0.35rem 1rem;
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--rb-lime); margin-bottom: 2.5rem; width: fit-content;
+}
+.rb-hero-tag-dot {
+  width: 6px; height: 6px; background: var(--rb-lime);
+  border-radius: 50%; animation: rb-blink 1.5s ease infinite;
+}
+.rb-hero-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4.5rem,9vw,8.5rem);
+  line-height: 0.92; letter-spacing: 0.02em; color: var(--rb-text); margin-bottom: 1rem;
+}
+.rb-hero-heading-italic {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  color: var(--rb-lime); font-size: clamp(3.5rem,7vw,7rem);
+  letter-spacing: 0; display: block;
+}
+.rb-hero-role {
+  font-size: clamp(0.9rem,1.8vw,1.1rem); font-weight: 300;
+  color: var(--rb-muted2); letter-spacing: 0.3em; text-transform: uppercase;
+  margin-bottom: 2.5rem;
+}
+.rb-hero-desc {
+  font-size: 0.95rem; color: var(--rb-muted2);
+  max-width: 500px; line-height: 1.9; margin-bottom: 3rem; font-weight: 300;
+}
+.rb-hero-desc-strong { color: var(--rb-text); font-weight: 600; }
+.rb-cta-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.rb-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  text-decoration: none; font-family: 'Outfit', sans-serif;
+  font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.85rem 1.75rem; transition: all 0.25s; border: none; cursor: pointer;
+}
+.rb-btn-lime { background: var(--rb-lime); color: #08090a; }
+.rb-btn-lime:hover { background: #d9ff55; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,241,53,0.25); }
+.rb-btn-ghost { background: transparent; color: var(--rb-text); border: 1px solid var(--rb-border2); }
+.rb-btn-ghost:hover { border-color: var(--rb-muted2); transform: translateY(-2px); }
+.rb-btn-icon { width: 16px; height: 16px; flex-shrink: 0; }
+
+.rb-cert-pill {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  border: 1px solid var(--rb-border2); padding: 0.5rem 1rem;
+  font-size: 0.72rem; font-weight: 500; color: var(--rb-muted2); letter-spacing: 0.05em;
+}
+.rb-cert-pill-dot { width: 8px; height: 8px; background: var(--rb-sky); border-radius: 50%; }
+
+/* HERO RIGHT */
+.rb-hero-right {
+  display: flex; flex-direction: column;
+  background: var(--rb-s1); padding: 10rem 2.5rem 5rem;
+}
+.rb-stat-block { padding: 2rem 0; border-bottom: 1px solid var(--rb-border); }
+.rb-stat-block-last { border-bottom: none; }
+.rb-stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4rem; line-height: 1; color: var(--rb-lime); letter-spacing: 0.02em;
+}
+.rb-stat-num-suffix { font-size: 2rem; color: var(--rb-lime2); }
+.rb-stat-label {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--rb-muted); margin-top: 0.4rem;
+}
+
+/* ═══════════════════════════════
+   SECTION
+═══════════════════════════════ */
+.rb-section { padding: 6rem 3rem; }
+.rb-section-alt { background: var(--rb-s1); }
+.rb-section-head {
+  display: flex; align-items: baseline; gap: 1.5rem;
+  margin-bottom: 4rem; flex-wrap: wrap;
+}
+.rb-section-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem; letter-spacing: 0.2em; color: var(--rb-muted);
+}
+.rb-section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem,5vw,4rem); letter-spacing: 0.04em; line-height: 1; color: var(--rb-text);
+}
+.rb-section-line { flex: 1; height: 1px; background: var(--rb-border); min-width: 30px; }
+
+/* ═══════════════════════════════
+   EXPERIENCE
+═══════════════════════════════ */
+.rb-exp-tabs {
+  display: flex; border-bottom: 1px solid var(--rb-border);
+  margin-bottom: 3rem; overflow-x: auto;
+}
+.rb-exp-tab {
+  padding: 1rem 2rem; font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--rb-muted); cursor: pointer; border: none;
+  border-bottom: 2px solid transparent; background: none;
+  white-space: nowrap; transition: all 0.2s; margin-bottom: -1px;
+}
+.rb-exp-tab:hover { color: var(--rb-text); }
+.rb-exp-tab-active { color: var(--rb-lime); border-bottom-color: var(--rb-lime); }
+.rb-exp-panel { display: none; grid-template-columns: 1fr 1fr; gap: 3rem; }
+.rb-exp-panel-active { display: grid; }
+.rb-exp-panel-org {
+  color: var(--rb-lime); font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem;
+}
+.rb-exp-panel-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.8rem,3vw,2.5rem); letter-spacing: 0.04em;
+  margin-bottom: 0.4rem; color: var(--rb-text);
+}
+.rb-exp-panel-date {
+  color: var(--rb-muted); font-size: 0.75rem; letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 2rem;
+}
+.rb-exp-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+.rb-chip {
+  padding: 0.3rem 0.8rem; font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  border: 1px solid var(--rb-border2); color: var(--rb-muted2); transition: all 0.2s;
+}
+.rb-chip:hover { border-color: var(--rb-lime); color: var(--rb-lime); }
+.rb-chip-lime { background: rgba(200,241,53,0.1); border-color: rgba(200,241,53,0.3); color: var(--rb-lime); }
+.rb-chip-sky  { background: rgba(78,205,196,0.08); border-color: rgba(78,205,196,0.25); color: var(--rb-sky); }
+.rb-exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 1.1rem; }
+.rb-exp-bullet {
+  display: flex; gap: 1rem; font-size: 0.88rem;
+  color: var(--rb-muted2); line-height: 1.75; font-weight: 300;
+}
+.rb-exp-bullet-icon { flex-shrink: 0; margin-top: 0.25rem; }
+.rb-exp-bullet-strong { color: var(--rb-text); font-weight: 600; }
+.rb-exp-panel-right { display: flex; flex-direction: column; gap: 1.5rem; }
+.rb-kpi-card {
+  background: var(--rb-s2); border: 1px solid var(--rb-border);
+  padding: 1.75rem; position: relative; overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.rb-kpi-card:hover { border-color: var(--rb-lime); transform: translateX(4px); }
+.rb-kpi-card-bar {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--rb-lime); opacity: 0; transition: opacity 0.3s;
+}
+.rb-kpi-card:hover .rb-kpi-card-bar { opacity: 1; }
+.rb-kpi-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem; color: var(--rb-lime); line-height: 1; margin-bottom: 0.3rem;
+}
+.rb-kpi-desc { font-size: 0.8rem; color: var(--rb-muted2); font-weight: 300; line-height: 1.6; }
+
+/* ═══════════════════════════════
+   SKILLS
+═══════════════════════════════ */
+.rb-skills-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 1px; background: var(--rb-border);
+}
+.rb-skill-card { background: var(--rb-bg); padding: 2rem 1.75rem; transition: background 0.25s; }
+.rb-skill-card:hover { background: var(--rb-s2); }
+.rb-skill-svg { width: 32px; height: 32px; margin-bottom: 1rem; }
+.rb-skill-cat {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+  letter-spacing: 0.06em; color: var(--rb-text); margin-bottom: 1rem;
+}
+.rb-skill-items { display: flex; flex-direction: column; gap: 0.5rem; }
+.rb-skill-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.8rem; color: var(--rb-muted2); font-weight: 300;
+}
+.rb-skill-item-dot {
+  width: 4px; height: 4px; background: var(--rb-muted);
+  border-radius: 50%; flex-shrink: 0; transition: background 0.2s;
+}
+.rb-skill-card:hover .rb-skill-item-dot { background: var(--rb-lime); }
+.rb-skill-item-featured { color: var(--rb-text); font-weight: 500; }
+.rb-skill-item-featured .rb-skill-item-dot { background: var(--rb-lime); }
+
+/* ═══════════════════════════════
+   ACHIEVEMENTS
+═══════════════════════════════ */
+.rb-ach-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.rb-ach-big {
+  background: var(--rb-lime); color: #08090a;
+  padding: 3rem; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: flex-end; min-height: 320px;
+}
+.rb-ach-big-bg { position: absolute; top: -1rem; right: 1rem; opacity: 0.08; pointer-events: none; }
+.rb-ach-big-label {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; opacity: 0.7; margin-bottom: 1rem;
+}
+.rb-ach-big-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;
+  letter-spacing: 0.04em; line-height: 1.05; margin-bottom: 0.75rem;
+}
+.rb-ach-big-desc { font-size: 0.88rem; opacity: 0.75; font-weight: 400; line-height: 1.7; }
+.rb-ach-stack { display: flex; flex-direction: column; gap: 2rem; }
+.rb-ach-card {
+  background: var(--rb-s2); border: 1px solid var(--rb-border);
+  padding: 2rem; position: relative; overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.rb-ach-card:hover { border-color: var(--rb-warm); transform: translateY(-3px); }
+.rb-ach-card-year {
+  position: absolute; top: 1.25rem; right: 1.5rem;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; color: var(--rb-muted); text-transform: uppercase;
+}
+.rb-ach-card-svg { width: 28px; height: 28px; margin-bottom: 0.75rem; }
+.rb-ach-card-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem;
+  letter-spacing: 0.04em; margin-bottom: 0.5rem;
+}
+.rb-ach-card-desc { font-size: 0.82rem; color: var(--rb-muted2); line-height: 1.7; font-weight: 300; }
+
+/* ═══════════════════════════════
+   CERTIFICATIONS
+═══════════════════════════════ */
+.rb-certs-divider {
+  display: flex; align-items: center; gap: 1.5rem; margin-top: 3rem; margin-bottom: 2rem;
+}
+.rb-certs-divider-label {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--rb-muted); white-space: nowrap;
+}
+.rb-certs-divider-line { flex: 1; height: 1px; background: var(--rb-border); }
+.rb-certs-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+.rb-cert-card {
+  background: var(--rb-bg); border: 1px solid var(--rb-border);
+  padding: 2rem; display: flex; align-items: flex-start; gap: 1.5rem;
+  transition: all 0.3s;
+}
+.rb-cert-card:hover { border-color: var(--rb-sky); transform: translateX(6px); }
+.rb-cert-card-badge {
+  width: 48px; height: 48px; flex-shrink: 0;
+  background: rgba(78,205,196,0.1); border: 1px solid rgba(78,205,196,0.25);
+  display: flex; align-items: center; justify-content: center;
+}
+.rb-cert-card-badge-svg { width: 24px; height: 24px; }
+.rb-cert-card-name {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+  letter-spacing: 0.04em; margin-bottom: 0.3rem;
+}
+.rb-cert-card-meta { font-size: 0.75rem; color: var(--rb-muted); letter-spacing: 0.08em; font-weight: 300; }
+
+/* ═══════════════════════════════
+   CONTACT
+═══════════════════════════════ */
+.rb-contact {
+  padding: 8rem 3rem 6rem; position: relative; overflow: hidden; background: var(--rb-bg);
+}
+.rb-contact-glow {
+  position: absolute; bottom: -300px; right: -200px;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle,rgba(200,241,53,0.07) 0%,transparent 70%);
+  pointer-events: none;
+}
+.rb-contact-overline {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--rb-lime); margin-bottom: 1.5rem;
+}
+.rb-contact-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem,7vw,6rem); line-height: 0.95;
+  letter-spacing: 0.02em; color: var(--rb-text); margin-bottom: 1.5rem;
+}
+.rb-contact-heading-italic {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  color: var(--rb-lime); font-size: 90%;
+}
+.rb-contact-sub {
+  font-size: 0.95rem; color: var(--rb-muted2); max-width: 520px;
+  line-height: 1.9; font-weight: 300; margin-bottom: 3rem;
+}
+.rb-contact-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; max-width: 780px; }
+.rb-contact-card {
+  background: var(--rb-s1); border: 1px solid var(--rb-border);
+  padding: 1.75rem; text-decoration: none;
+  display: flex; flex-direction: column; gap: 0.5rem; transition: all 0.3s;
+}
+.rb-contact-card:hover { border-color: var(--rb-lime); transform: translateY(-4px); }
+.rb-contact-card-svg { width: 24px; height: 24px; margin-bottom: 0.25rem; }
+.rb-contact-card-label {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--rb-muted);
+}
+.rb-contact-card-val { font-size: 0.85rem; color: var(--rb-text); font-weight: 500; word-break: break-all; }
+
+/* ═══════════════════════════════
+   FOOTER
+═══════════════════════════════ */
+.rb-footer {
+  background: var(--rb-s1); border-top: 1px solid var(--rb-border);
+  padding: 2rem 3rem; display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+}
+.rb-footer-logo {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem;
+  letter-spacing: 0.1em; color: var(--rb-lime);
+}
+.rb-footer-copy { font-size: 0.72rem; color: var(--rb-muted); letter-spacing: 0.08em; }
+.rb-footer-links { display: flex; gap: 1.5rem; list-style: none; }
+.rb-footer-link { font-size: 0.72rem; color: var(--rb-muted); text-decoration: none; letter-spacing: 0.08em; transition: color 0.2s; }
+.rb-footer-link:hover { color: var(--rb-lime); }
+
+/* ═══════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════ */
+.rb-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.rb-reveal-visible { opacity: 1; transform: none; }
+
+/* ═══════════════════════════════
+   HERO ANIMATIONS
+═══════════════════════════════ */
+@keyframes rb-fade-up { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+.rb-au-1 { animation: rb-fade-up 0.7s 0.1s both; }
+.rb-au-2 { animation: rb-fade-up 0.7s 0.25s both; }
+.rb-au-3 { animation: rb-fade-up 0.7s 0.4s both; }
+.rb-au-4 { animation: rb-fade-up 0.7s 0.55s both; }
+.rb-au-5 { animation: rb-fade-up 0.7s 0.7s both; }
+.rb-au-6 { animation: rb-fade-up 0.7s 0.85s both; }
+
+/* ═══════════════════════════════
+   RESPONSIVE 1100px
+═══════════════════════════════ */
+@media (max-width:1100px) {
+  .rb-hero { grid-template-columns: 1fr; }
+  .rb-hero-right {
+    flex-direction: row; flex-wrap: wrap;
+    padding: 3rem; border-top: 1px solid var(--rb-border);
+  }
+  .rb-stat-block { flex: 1; min-width: 130px; border-bottom: none; border-right: 1px solid var(--rb-border); padding: 1.5rem 2rem; }
+  .rb-stat-block-last { border-right: none; }
+  .rb-skills-grid { grid-template-columns: repeat(2,1fr); }
+  .rb-ach-layout { grid-template-columns: 1fr; }
+  .rb-ach-big { min-height: 240px; }
+}
+
+/* ═══════════════════════════════
+   RESPONSIVE 768px
+═══════════════════════════════ */
+@media (max-width:768px) {
+  .rb-nav { padding: 0.85rem 1.25rem; }
+  .rb-nav-links { display: none; }
+  .rb-nav-badge { display: none; }
+  .rb-hamburger { display: flex; }
+
+  .rb-hero-left { padding: 7.5rem 1.5rem 3rem; }
+  .rb-hero-heading { font-size: clamp(3.5rem,16vw,6rem); }
+  .rb-hero-right { padding: 2rem 1.5rem; }
+  .rb-stat-block { padding: 1.25rem 1rem; }
+  .rb-stat-num { font-size: 2.8rem; }
+
+  .rb-section { padding: 4rem 1.5rem; }
+  .rb-section-title { font-size: 2.2rem; }
+  .rb-section-head { margin-bottom: 2.5rem; }
+
+  .rb-exp-panel-active { grid-template-columns: 1fr; }
+  .rb-exp-panel-right { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .rb-exp-tab { padding: 0.85rem 1.25rem; font-size: 0.72rem; }
+
+  .rb-certs-grid { grid-template-columns: 1fr; }
+
+  .rb-contact { padding: 5rem 1.5rem 4rem; }
+  .rb-contact-cards { grid-template-columns: 1fr; max-width: 100%; }
+
+  .rb-footer { padding: 1.5rem; flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .rb-footer-links { gap: 1rem; }
+}
+
+/* ═══════════════════════════════
+   RESPONSIVE 480px
+═══════════════════════════════ */
+@media (max-width:480px) {
+  .rb-hero-heading { font-size: 3.2rem; }
+  .rb-hero-heading-italic { font-size: 2.8rem; }
+  .rb-hero-right { flex-direction: column; }
+  .rb-stat-block { border-right: none; border-bottom: 1px solid var(--rb-border); }
+  .rb-stat-block-last { border-bottom: none; }
+  .rb-exp-panel-right { grid-template-columns: 1fr; }
+  .rb-skills-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="rb-noise"></div>
+
+<!-- MOBILE MENU -->
+<div class="rb-mobile-menu" id="rb-mobile-menu">
+  <a class="rb-mobile-nav-link" href="#rb-experience" onclick="rbCloseMenu()">Experience</a>
+  <a class="rb-mobile-nav-link" href="#rb-skills"     onclick="rbCloseMenu()">Skills</a>
+  <a class="rb-mobile-nav-link" href="#rb-achievements" onclick="rbCloseMenu()">Achievements</a>
+  <a class="rb-mobile-nav-link" href="#rb-contact"    onclick="rbCloseMenu()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav class="rb-nav" id="rb-nav">
+  <a class="rb-nav-logo" href="#">RB.</a>
+  <div class="rb-nav-right">
+    <ul class="rb-nav-links">
+      <li><a class="rb-nav-link" href="#rb-experience">Experience</a></li>
+      <li><a class="rb-nav-link" href="#rb-skills">Skills</a></li>
+      <li><a class="rb-nav-link" href="#rb-achievements">Achievements</a></li>
+      <li><a class="rb-nav-link" href="#rb-contact">Contact</a></li>
+    </ul>
+    <div class="rb-nav-badge">
+      <span class="rb-nav-badge-dot"></span>Open to Work
+    </div>
+    <button class="rb-hamburger" id="rb-hamburger" onclick="rbToggleMenu()" aria-label="Menu">
+      <span class="rb-hamburger-bar"></span>
+      <span class="rb-hamburger-bar"></span>
+      <span class="rb-hamburger-bar"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="rb-hero">
+  <div class="rb-hero-left">
+    <div class="rb-hero-glow"></div>
+    <div class="rb-hero-tag rb-au-1">
+      <span class="rb-hero-tag-dot"></span>
+      Available for all QA Roles &nbsp;·&nbsp; Remote / Hybrid / On-site
+    </div>
+    <h1 class="rb-hero-heading rb-au-2">
+      ROHINI
+      <span class="rb-hero-heading-italic">Balakrishnan</span>
+    </h1>
+    <p class="rb-hero-role rb-au-3">QA Engineer &nbsp;·&nbsp; 5+ Years Experience</p>
+    <p class="rb-hero-desc rb-au-4">
+      I break software <span class="rb-hero-desc-strong">before your users do.</span>
+      Specialising in API testing, test automation, and end-to-end functional coverage —
+      I've delivered <span class="rb-hero-desc-strong">15 full releases with zero production leakages</span>
+      across major telecom transformation programmes.
+    </p>
+    <div class="rb-cta-row rb-au-5">
+      <a class="rb-btn rb-btn-lime" href="mailto:balakrishnanrohini632@gmail.com">
+        <!-- SVG: Mail -->
+        <svg class="rb-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Hire Me
+      </a>
+      <a class="rb-btn rb-btn-ghost" href="https://linkedin.com/in/rohini-b-b1091818b" target="_blank">
+        <!-- SVG: LinkedIn -->
+        <svg class="rb-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn ↗
+      </a>
+    </div>
+    <div class="rb-cert-pill rb-au-6">
+      <span class="rb-cert-pill-dot"></span>
+      ISTQB Certified Foundation Level · 2023
+    </div>
+  </div>
+
+  <div class="rb-hero-right rb-au-3">
+    <div class="rb-stat-block">
+      <div class="rb-stat-num">5<span class="rb-stat-num-suffix">+</span></div>
+      <div class="rb-stat-label">Years in QA</div>
+    </div>
+    <div class="rb-stat-block">
+      <div class="rb-stat-num">15</div>
+      <div class="rb-stat-label">Full Releases</div>
+    </div>
+    <div class="rb-stat-block">
+      <div class="rb-stat-num">0</div>
+      <div class="rb-stat-label">Production Leakages</div>
+    </div>
+    <div class="rb-stat-block rb-stat-block-last">
+      <div class="rb-stat-num">2</div>
+      <div class="rb-stat-label">Enterprise Clients</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="rb-section" id="rb-experience">
+  <div class="rb-section-head rb-reveal">
+    <span class="rb-section-num">01</span>
+    <h2 class="rb-section-title">Experience</h2>
+    <div class="rb-section-line"></div>
+  </div>
+  <div class="rb-exp-tabs rb-reveal">
+    <button class="rb-exp-tab rb-exp-tab-active" onclick="rbSwitchTab(0,this)">VMO2 · 2023 – Present</button>
+    <button class="rb-exp-tab" onclick="rbSwitchTab(1,this)">Telenet · 2020 – 2022</button>
+  </div>
+
+  <!-- Panel 0 -->
+  <div class="rb-exp-panel rb-exp-panel-active" id="rb-panel-0">
+    <div class="rb-exp-panel-left rb-reveal">
+      <div class="rb-exp-panel-org">Cognizant Technology Solutions</div>
+      <div class="rb-exp-panel-title">Digital Front End &amp; BSS Transformation</div>
+      <div class="rb-exp-panel-date">VMO2 · 2023 – Present</div>
+      <div class="rb-exp-chips">
+        <span class="rb-chip rb-chip-lime">Postman API</span>
+        <span class="rb-chip rb-chip-lime">Selenium Java</span>
+        <span class="rb-chip rb-chip-sky">JIRA</span>
+        <span class="rb-chip">Regression</span>
+        <span class="rb-chip">Agile</span>
+        <span class="rb-chip">E2E</span>
+      </div>
+      <ul class="rb-exp-bullets">
+        <li class="rb-exp-bullet">
+          <svg class="rb-exp-bullet-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8f135" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Executed manual, functional &amp; automation testing across <span class="rb-exp-bullet-strong">15 complete releases with zero production leakages</span>, consistently meeting release SLAs.</span>
+        </li>
+        <li class="rb-exp-bullet">
+          <svg class="rb-exp-bullet-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8f135" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Performed <span class="rb-exp-bullet-strong">REST API dispatch and contract validation</span> via Postman, covering edge cases, error handling, and integration flows across microservices.</span>
+        </li>
+        <li class="rb-exp-bullet">
+          <svg class="rb-exp-bullet-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8f135" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Managed full <span class="rb-exp-bullet-strong">defect lifecycle in JIRA</span> — from discovery and triage through re-test and closure across multiple Agile sprint cycles.</span>
+        </li>
+        <li class="rb-exp-bullet">
+          <svg class="rb-exp-bullet-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8f135" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Owned regression and smoke test suites, qualifying each build before production and reducing late-cycle risk for the delivery team.</span>
+        </li>
+        <li class="rb-exp-bullet">
+          <svg class="rb-exp-bullet-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8f135" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Authored release-specific test procedures and checklists in Confluence, aligned to evolving SOPs and SLAs.</span>
+        </li>
+        <li class="rb-exp-bullet">
+          <svg class="rb-exp-bullet-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8f135" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Received <span class="rb-exp-bullet-strong">Certificate of Appreciation</span> from UKI Delivery Leadership for sustained quality and on-time delivery.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="rb-exp-panel-right rb-reveal">
+      <div class="rb-kpi-card"><div class="rb-kpi-card-bar"></div><div class="rb-kpi-val">15</div><div class="rb-kpi-desc">Full releases executed with complete test coverage and sign-off documentation</div></div>
+      <div class="rb-kpi-card"><div class="rb-kpi-card-bar"></div><div class="rb-kpi-val">0</div><div class="rb-kpi-desc">Defects escaped to production — maintained across the entire project tenure</div></div>
+      <div class="rb-kpi-card"><div class="rb-kpi-card-bar"></div><div class="rb-kpi-val">API+</div><div class="rb-kpi-desc">Postman API validation layered on top of functional and regression test plans</div></div>
+    </div>
+  </div>
+
+  <!-- Panel 1 -->
+  <div class="rb-exp-panel" id="rb-panel-1">
+    <div class="rb-exp-panel-left rb-reveal">
+      <div class="rb-exp-panel-org">Cognizant Technology Solutions</div>
+      <div class="rb-exp-panel-title">Order to Bill Programme</div>
+      <div class="rb-exp-panel-date">Telenet · 2020 – 2022</div>
+      <div class="rb-exp-chips">
+        <span class="rb-chip rb-chip-lime">E2E Testing</span>
+        <span class="rb-chip rb-chip-lime">Manual &amp; Functional</span>
+        <span class="rb-chip rb-chip-sky">HP-ALM</span>
+        <span class="rb-chip">PEGA</span>
+        <span class="rb-chip">NETCRACKER</span>
+        <span class="rb-chip">UAT</span>
+      </div>
+      <ul class="rb-exp-bullets">
+        <li class="rb-exp-bullet">
+          <svg class="rb-exp-bullet-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8f135" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Executed <span class="rb-exp-bullet-strong">end-to-end functional testing</span> across the full customer order-to-bill journey — from order capture through provisioning, billing, and notification.</span>
+        </li>
+        <li class="rb-exp-bullet">
+          <svg class="rb-exp-bullet-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8f135" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Validated <span class="rb-exp-bullet-strong">PEGA and NETCRACKER workflow</span> correctness, verifying system integration integrity across order management and billing modules.</span>
+        </li>
+        <li class="rb-exp-bullet">
+          <svg class="rb-exp-bullet-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8f135" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Tested <span class="rb-exp-bullet-strong">multilingual notification accuracy</span> across customer-facing communications for a multi-locale European deployment.</span>
+        </li>
+        <li class="rb-exp-bullet">
+          <svg class="rb-exp-bullet-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8f135" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Verified <span class="rb-exp-bullet-strong">billing rules and revenue-impacting features</span> — directly reducing financial risk ahead of billing cycle go-lives.</span>
+        </li>
+        <li class="rb-exp-bullet">
+          <svg class="rb-exp-bullet-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8f135" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Maintained structured test evidence in HP-ALM and supported <span class="rb-exp-bullet-strong">UAT sign-off cycles</span> with business stakeholders.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="rb-exp-panel-right rb-reveal">
+      <div class="rb-kpi-card"><div class="rb-kpi-card-bar"></div><div class="rb-kpi-val">E2E</div><div class="rb-kpi-desc">Full customer journey coverage from order entry through billing and notification</div></div>
+      <div class="rb-kpi-card"><div class="rb-kpi-card-bar"></div><div class="rb-kpi-val">Multi</div><div class="rb-kpi-desc">Multilingual and multi-locale testing across a European customer-facing platform</div></div>
+      <div class="rb-kpi-card"><div class="rb-kpi-card-bar"></div><div class="rb-kpi-val">UAT</div><div class="rb-kpi-desc">Direct support for business UAT cycles, bridging technical and business teams</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="rb-section rb-section-alt" id="rb-skills">
+  <div class="rb-section-head rb-reveal">
+    <span class="rb-section-num">02</span>
+    <h2 class="rb-section-title">Skills</h2>
+    <div class="rb-section-line"></div>
+  </div>
+  <div class="rb-skills-grid rb-reveal">
+    <!-- API Testing -->
+    <div class="rb-skill-card">
+      <svg class="rb-skill-svg" viewBox="0 0 32 32" fill="none">
+        <rect x="2" y="8" width="28" height="20" rx="2" stroke="#4ecdc4" stroke-width="1.5"/>
+        <path d="M2 13h28" stroke="#4ecdc4" stroke-width="1.5"/>
+        <circle cx="7" cy="10.5" r="1" fill="#4ecdc4"/>
+        <circle cx="11" cy="10.5" r="1" fill="#4ecdc4"/>
+        <circle cx="15" cy="10.5" r="1" fill="#4ecdc4"/>
+        <path d="M8 19l3 3-3 3M14 25h6" stroke="#c8f135" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="rb-skill-cat">API Testing</div>
+      <div class="rb-skill-items">
+        <div class="rb-skill-item rb-skill-item-featured"><span class="rb-skill-item-dot"></span>Postman</div>
+        <div class="rb-skill-item rb-skill-item-featured"><span class="rb-skill-item-dot"></span>REST API Validation</div>
+        <div class="rb-skill-item"><span class="rb-skill-item-dot"></span>Contract Testing</div>
+        <div class="rb-skill-item"><span class="rb-skill-item-dot"></span>Integration Testing</div>
+        <div class="rb-skill-item"><span class="rb-skill-item-dot"></span>Edge Case Coverage</div>
+      </div>
+    </div>
+    <!-- Automation -->
+    <div class="rb-skill-card">
+      <svg class="rb-skill-svg" viewBox="0 0 32 32" fill="none">
+        <path d="M16 4l2.5 7.5H26l-6.5 4.5 2.5 7.5L16 19l-6 4.5 2.5-7.5L6 11.5h7.5z" stroke="#c8f135" stroke-width="1.5" stroke-linejoin="round"/>
+        <circle cx="16" cy="19" r="2" fill="#c8f135"/>
+        <path d="M16 21v6M12 27h8" stroke="#c8f135" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div class="rb-skill-cat">Automation</div>
+      <div class="rb-skill-items">
+        <div class="rb-skill-item rb-skill-item-featured"><span class="rb-skill-item-dot"></span>Selenium Java</div>
+        <div class="rb-skill-item rb-skill-item-featured"><span class="rb-skill-item-dot"></span>Java Programming</div>
+        <div class="rb-skill-item"><span class="rb-skill-item-dot"></span>Regression Suites</div>
+        <div class="rb-skill-item"><span class="rb-skill-item-dot"></span>Smoke Testing</div>
+        <div class="rb-skill-item"><span class="rb-skill-item-dot"></span>Build Qualification</div>
+      </div>
+    </div>
+    <!-- Manual & Functional -->
+    <div class="rb-skill-card">
+      <svg class="rb-skill-svg" viewBox="0 0 32 32" fill="none">
+        <rect x="6" y="4" width="20" height="24" rx="2" stroke="#c8f135" stroke-width="1.5"/>
+        <path d="M10 10h12M10 15h12M10 20h8" stroke="#c8f135" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="23" cy="22" r="5" fill="#0f1112" stroke="#4ecdc4" stroke-width="1.5"/>
+        <path d="M21 22l1.5 1.5L25 20" stroke="#4ecdc4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="rb-skill-cat">Manual &amp; Functional</div>
+      <div class="rb-skill-items">
+        <div class="rb-skill-item rb-skill-item-featured"><span class="rb-skill-item-dot"></span>Functional Testing</div>
+        <div class="rb-skill-item rb-skill-item-featured"><span class="rb-skill-item-dot"></span>E2E Testing</div>
+        <div class="rb-skill-item"><span class="rb-skill-item-dot"></span>UAT Support</div>
+        <div class="rb-skill-item"><span class="rb-skill-item-dot"></span>Web &amp; Mobile</div>
+        <div class="rb-skill-item"><span class="rb-skill-item-dot"></span>Multilingual UI</div>
+      </div>
+    </div>
+    <!-- Tools & Process -->
+    <div class="rb-skill-card">
+      <svg class="rb-skill-svg" viewBox="0 0 32 32" fill="none">
+        <path d="M13 4l-9 9 4 4 2-2 10 10 4-4-10-10 2-2z" stroke="#c8f135" stroke-width="1.5" stroke-linejoin="round"/>
+        <circle cx="24" cy="8" r="4" stroke="#4ecdc4" stroke-width="1.5"/>
+        <path d="M22 8h4M24 6v4" stroke="#4ecdc4" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div class="rb-skill-cat">Tools &amp; Process</div>
+      <div class="rb-skill-items">
+        <div class="rb-skill-item rb-skill-item-featured"><span class="rb-skill-item-dot"></span>JIRA</div>
+        <div class="rb-skill-item rb-skill-item-featured"><span class="rb-skill-item-dot"></span>HP-ALM</div>
+        <div class="rb-skill-item"><span class="rb-skill-item-dot"></span>Confluence</div>
+        <div class="rb-skill-item"><span class="rb-skill-item-dot"></span>Agile / Scrum</div>
+        <div class="rb-skill-item"><span class="rb-skill-item-dot"></span>SDLC / STLC</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section class="rb-section" id="rb-achievements">
+  <div class="rb-section-head rb-reveal">
+    <span class="rb-section-num">03</span>
+    <h2 class="rb-section-title">Achievements</h2>
+    <div class="rb-section-line"></div>
+  </div>
+  <div class="rb-ach-layout">
+    <div class="rb-ach-big rb-reveal">
+      <!-- Big star SVG background -->
+      <svg class="rb-ach-big-bg" width="160" height="160" viewBox="0 0 24 24" fill="#08090a"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+      <div class="rb-ach-big-label">Cognizant · 2024</div>
+      <div class="rb-ach-big-title">Impact Award 2024</div>
+      <div class="rb-ach-big-desc">Awarded for exceptional contribution to global BSS transformation delivery — recognised for measurable impact on release quality, team performance, and client satisfaction.</div>
+    </div>
+    <div class="rb-ach-stack">
+      <div class="rb-ach-card rb-reveal">
+        <div class="rb-ach-card-year">2023 – Present</div>
+        <!-- Target SVG -->
+        <svg class="rb-ach-card-svg" viewBox="0 0 24 24" fill="none" stroke="#c8f135" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="#c8f135"/>
+          <path d="M22 12h-4M12 2v4M2 12h4M12 22v-4"/>
+        </svg>
+        <div class="rb-ach-card-title">Zero Production Leakages</div>
+        <div class="rb-ach-card-desc">Maintained a flawless record across 15 full release cycles on the VMO2 project — no defect has ever escaped to production under my watch.</div>
+      </div>
+      <div class="rb-ach-card rb-reveal">
+        <div class="rb-ach-card-year">2023</div>
+        <!-- Award SVG -->
+        <svg class="rb-ach-card-svg" viewBox="0 0 24 24" fill="none" stroke="#f7c948" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+        </svg>
+        <div class="rb-ach-card-title">UKI Leadership Appreciation</div>
+        <div class="rb-ach-card-desc">Certificate of Appreciation from UKI Delivery Leadership at Cognizant for consistent client recognition, quality work, and on-time delivery.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CERTIFICATIONS -->
+  <div class="rb-certs-divider rb-reveal">
+    <span class="rb-certs-divider-label">Certifications &amp; Education</span>
+    <div class="rb-certs-divider-line"></div>
+  </div>
+  <div class="rb-certs-grid rb-reveal">
+    <!-- ISTQB -->
+    <div class="rb-cert-card">
+      <div class="rb-cert-card-badge">
+        <svg class="rb-cert-card-badge-svg" viewBox="0 0 24 24" fill="none" stroke="#4ecdc4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/>
+        </svg>
+      </div>
+      <div><div class="rb-cert-card-name">ISTQB Certified Tester</div><div class="rb-cert-card-meta">Foundation Level · 2023</div></div>
+    </div>
+    <!-- Java -->
+    <div class="rb-cert-card">
+      <div class="rb-cert-card-badge">
+        <svg class="rb-cert-card-badge-svg" viewBox="0 0 24 24" fill="none" stroke="#4ecdc4" stroke-width="1.5" stroke-linecap="round">
+          <path d="M8 3s-2 1.5-2 5c0 2.5 2 4 2 4s-4-1-4-5.5C4 3.5 8 3 8 3z"/>
+          <path d="M11 2s3 2.5 1 7c-1.5 3.5 1 5 1 5s-5-2-3-7c1-2.5 1-5 1-5z"/>
+          <path d="M14 14s2 1.5 2 4c0 2-2 3-2 3s4-1 4-3.5c0-3-4-3.5-4-3.5z"/>
+          <path d="M6 20s-1 1 2 1.5c4 .5 7 .5 9-1"/>
+          <path d="M5 18s-1 1 2 1.5c4 .5 8 .5 10-1"/>
+        </svg>
+      </div>
+      <div><div class="rb-cert-card-name">Java Programming</div><div class="rb-cert-card-meta">Certification · 2022</div></div>
+    </div>
+    <!-- BCA -->
+    <div class="rb-cert-card">
+      <div class="rb-cert-card-badge">
+        <svg class="rb-cert-card-badge-svg" viewBox="0 0 24 24" fill="none" stroke="#4ecdc4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </svg>
+      </div>
+      <div><div class="rb-cert-card-name">BCA — Madras University</div><div class="rb-cert-card-meta">Computer Applications · 2017–2020</div></div>
+    </div>
+    <!-- Digital Marketing -->
+    <div class="rb-cert-card">
+      <div class="rb-cert-card-badge">
+        <svg class="rb-cert-card-badge-svg" viewBox="0 0 24 24" fill="none" stroke="#4ecdc4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3l7 7M3 10l7-7M20.5 17.5a5 5 0 0 1-7 7L4 15l1-4 4-1z"/><circle cx="17.5" cy="6.5" r="4.5"/>
+        </svg>
+      </div>
+      <div><div class="rb-cert-card-name">Digital Marketing</div><div class="rb-cert-card-meta">Certification · 2020</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="rb-contact" id="rb-contact">
+  <div class="rb-contact-glow"></div>
+  <p class="rb-contact-overline rb-reveal">Open to Work · All QA Roles · Remote / Hybrid / On-site</p>
+  <h2 class="rb-contact-heading rb-reveal">
+    Let's ship<br/>
+    <span class="rb-contact-heading-italic">quality</span><br/>
+    software.
+  </h2>
+  <p class="rb-contact-sub rb-reveal">
+    I'm actively looking for QA Engineer, SDET, Test Automation, and Senior QA Associate roles.
+    If your team cares about quality — let's talk.
+  </p>
+  <div class="rb-contact-cards rb-reveal">
+    <a class="rb-contact-card" href="mailto:balakrishnanrohini632@gmail.com">
+      <svg class="rb-contact-card-svg" viewBox="0 0 24 24" fill="none" stroke="#c8f135" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      <div class="rb-contact-card-label">Email</div>
+      <div class="rb-contact-card-val">balakrishnanrohini632@gmail.com</div>
+    </a>
+    <a class="rb-contact-card" href="tel:+916383318955">
+      <svg class="rb-contact-card-svg" viewBox="0 0 24 24" fill="none" stroke="#c8f135" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.88 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.79 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l1.32-1.32a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <div class="rb-contact-card-label">Phone</div>
+      <div class="rb-contact-card-val">+91 63833 18955</div>
+    </a>
+    <a class="rb-contact-card" href="https://linkedin.com/in/rohini-b-b1091818b" target="_blank">
+      <svg class="rb-contact-card-svg" viewBox="0 0 24 24" fill="none" stroke="#c8f135" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      <div class="rb-contact-card-label">LinkedIn</div>
+      <div class="rb-contact-card-val">rohini-b-b1091818b</div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="rb-footer">
+  <div class="rb-footer-logo">RB.</div>
+  <div class="rb-footer-copy">© 2025 Rohini Balakrishnan · QA Engineer</div>
+  <ul class="rb-footer-links">
+    <li><a class="rb-footer-link" href="#rb-experience">Experience</a></li>
+    <li><a class="rb-footer-link" href="#rb-skills">Skills</a></li>
+    <li><a class="rb-footer-link" href="#rb-contact">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+function rbToggleMenu(){
+  document.getElementById('rb-hamburger').classList.toggle('rb-hamburger-open');
+  document.getElementById('rb-mobile-menu').classList.toggle('rb-mobile-menu-open');
+  document.body.style.overflow = document.getElementById('rb-mobile-menu').classList.contains('rb-mobile-menu-open') ? 'hidden' : '';
+}
+function rbCloseMenu(){
+  document.getElementById('rb-hamburger').classList.remove('rb-hamburger-open');
+  document.getElementById('rb-mobile-menu').classList.remove('rb-mobile-menu-open');
+  document.body.style.overflow = '';
+}
+function rbSwitchTab(idx,btn){
+  document.querySelectorAll('.rb-exp-tab').forEach(function(t){ t.classList.remove('rb-exp-tab-active'); });
+  document.querySelectorAll('.rb-exp-panel').forEach(function(p){ p.classList.remove('rb-exp-panel-active'); });
+  btn.classList.add('rb-exp-tab-active');
+  document.getElementById('rb-panel-'+idx).classList.add('rb-exp-panel-active');
+}
+var rbObserver = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){ e.target.classList.add('rb-reveal-visible'); rbObserver.unobserve(e.target); }
+  });
+},{ threshold:0.08, rootMargin:'0px 0px -40px 0px' });
+document.querySelectorAll('.rb-reveal').forEach(function(el,i){
+  el.style.transitionDelay = (i%4)*0.08+'s';
+  rbObserver.observe(el);
+});
+window.addEventListener('scroll',function(){
+  document.getElementById('rb-nav').style.boxShadow = window.scrollY>20 ? '0 4px 32px rgba(0,0,0,0.4)' : 'none';
+});
+</script>
+</body>
+</html>
